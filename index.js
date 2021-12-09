@@ -203,7 +203,8 @@ module.exports = app => {
     })
 
     // assign GitHub label
-    return await addLabel(context, label, labelColor)
+    await addLabel(context, label, labelColor)
+		return {success: true}
   })
 
   // we don't care about marketplace events
