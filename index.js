@@ -155,12 +155,20 @@ async function ensureLabelExists (context, name, color) {
  * This is the main event loop that runs when a revelent Pull Request
  * action is triggered.
  */
-module.exports = app => {
+module.exports =  (app, { getRouter }) => {
+	const router = getRouter("/");
+	router.use(require("express").static("public"));
+	router.post("/", (req, res) => {
+    res.send("Hello World");
+  });
   app.on([
     'pull_request.opened',
     'pull_request.reopened',
     'pull_request.synchronize',
     'pull_request.edited'], async context => {
+
+			// just to test if we are correctly receiving events
+			return {success: true}
 
     const pullRequest = context.payload.pull_request;
     const number = pullRequest.number;
@@ -204,7 +212,6 @@ module.exports = app => {
 
     // assign GitHub label
     await addLabel(context, label, labelColor)
-		return {success: true}
   })
 
   // we don't care about marketplace events
