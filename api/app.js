@@ -3,7 +3,6 @@ Sentry.init({ dsn: process.env.SENTRY_DSN });
 const generated = require('@noqcks/generated');
 const minimatch = require("minimatch")
 const yaml = require('js-yaml');
-const { LogLevel } = require('@sentry/core');
 
 const labels = {
   XS: {
@@ -157,8 +156,13 @@ async function ensureLabelExists (context, name, color) {
  * This is the main event loop that runs when a revelent Pull Request
  * action is triggered.
  */
-module.exports = app => {
+module.exports = (app, { getRouter }) => {
 	console.log("running the app")
+	const router = getRouter("/");
+	router.use(require("express").static("public"));
+	router.post("/", (req, res) => {
+    res.send("Hello World");
+  });
   app.on([
     'pull_request.opened',
     'pull_request.reopened',
