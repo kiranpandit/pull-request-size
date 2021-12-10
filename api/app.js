@@ -161,6 +161,8 @@ module.exports = (app, { getRouter }) => {
 	const router = getRouter("/");
 	router.use(require("express").static("public"));
 	router.post("/", (req, res) => {
+		console.log("hello world!!")
+		console.log("logging req", req)
     res.send("Hello World");
   });
   app.on([
