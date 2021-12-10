@@ -158,12 +158,12 @@ async function ensureLabelExists (context, name, color) {
  */
 module.exports = app => {
 	console.log("running the app")
-  app.onAny(
-		// [
-    // 'pull_request.opened',
-    // 'pull_request.reopened',
-    // 'pull_request.synchronize',
-    // 'pull_request.edited'],
+  app.on(
+		[
+    'pull_request.opened',
+    'pull_request.reopened',
+    'pull_request.synchronize',
+    'pull_request.edited'],
 		async context => {
 			context.log.info({ event: context.name, action: context.payload.action });
 		console.log("the action is triggered")
