@@ -168,7 +168,7 @@ module.exports =  (app, { getRouter }) => {
     'pull_request.edited'], async context => {
 
 			// just to test if we are correctly receiving events
-			return {success: true}
+			//return {success: true}
 
     const pullRequest = context.payload.pull_request;
     const number = pullRequest.number;
