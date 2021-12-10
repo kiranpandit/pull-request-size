@@ -3,6 +3,7 @@ Sentry.init({ dsn: process.env.SENTRY_DSN });
 const generated = require('@noqcks/generated');
 const minimatch = require("minimatch")
 const yaml = require('js-yaml');
+const { LogLevel } = require('@sentry/core');
 
 const labels = {
   XS: {
@@ -142,6 +143,7 @@ async function ensureLabelExists (context, name, color) {
       name: name
     }))
   } catch (e) {
+		console.log("creating label")
     return context.octokit.issues.createLabel(context.repo({
       name: name,
       color: color
@@ -161,16 +163,17 @@ module.exports = app => {
     'pull_request.reopened',
     'pull_request.synchronize',
     'pull_request.edited'], async context => {
-
+		console.log("the action is triggered")
     const pullRequest = context.payload.pull_request;
     const number = pullRequest.number;
     const {owner: {login: owner}, name: repo} = pullRequest.base.repo;
     let {additions, deletions} = pullRequest;
+		console.log("number", number)
 
     // get list of custom generated files as defined in .gitattributes
     const customGeneratedFiles = await getCustomGeneratedFiles(context, owner, repo)
     const customLabels = await getCustomLabels(context, owner, repo);
-
+		console.log("customLabels", customLabels)
     // list of files modified in the pull request
     const res = await context.octokit.pulls.listFiles({
       owner: owner,
@@ -189,7 +192,8 @@ module.exports = app => {
 
     // calculate GitHub label
     let [labelColor, label] = sizeLabel(additions + deletions, customLabels)
-
+		console.log("labelColor", labelColor)
+		console.log("label", label)
     // remove existing size/<size> label if it exists and is not labelToAdd
     pullRequest.labels.forEach(function(prLabel) {
       label_names = Object.keys(customLabels).map(key => customLabels[key]["name"])
