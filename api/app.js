@@ -158,6 +158,7 @@ async function ensureLabelExists (context, name, color) {
  * action is triggered.
  */
 module.exports = app => {
+	console.log("running the app")
   app.on([
     'pull_request.opened',
     'pull_request.reopened',
