@@ -165,6 +165,7 @@ module.exports = app => {
     // 'pull_request.synchronize',
     // 'pull_request.edited'],
 		async context => {
+			context.log.info({ event: context.name, action: context.payload.action });
 		console.log("the action is triggered")
     const pullRequest = context.payload.pull_request;
     const number = pullRequest.number;
