@@ -3,7 +3,7 @@ const { createNodeMiddleware, createProbot } = require("probot");
 
 const appFn = require("."); // this is where we import the module.exports
 const probot = createProbot();
-
+console.log("This is inside the handler.js")
 module.exports = createNodeMiddleware(appFn, { probot});
 
 // module.exports.webhooks = createLambdaFunction(appFn, {
