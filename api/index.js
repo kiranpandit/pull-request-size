@@ -1,23 +1,6 @@
 const { createNodeMiddleware, createProbot } = require("probot");
 
 
-const appFn = require("."); // this is where we import the module.exports
-const probot = createProbot();
-console.log("This is inside the handler.js")
+const appFn = require("./app"); // this is where we import the module.exports
+const probot = createProbot({appId: "157939"});
 module.exports = createNodeMiddleware(appFn, { probot});
-
-// module.exports.webhooks = createLambdaFunction(appFn, {
-//   probot: createProbot(),
-// });
-
-// This is copied from probot hello world
-// const { createNodeMiddleware, createProbot } = require("probot");
-
-// const app = require("../../../app");
-// const probot = createProbot();
-
-// module.exports = createNodeMiddleware(app, { probot, webhooksPath: '/api/github/webhooks' });
-
-
-
-// this is where we actually want to have some kind of API/listener something
