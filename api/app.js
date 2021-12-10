@@ -156,20 +156,15 @@ async function ensureLabelExists (context, name, color) {
  * This is the main event loop that runs when a revelent Pull Request
  * action is triggered.
  */
-module.exports = (app, { getRouter }) => {
+module.exports = app => {
 	console.log("running the app")
-	const router = getRouter("/");
-	router.use(require("express").static("public"));
-	router.post("/", (req, res) => {
-		console.log("hello world!!")
-		console.log("logging req", req)
-    res.send("Hello World");
-  });
-  app.on([
-    'pull_request.opened',
-    'pull_request.reopened',
-    'pull_request.synchronize',
-    'pull_request.edited'], async context => {
+  app.onAny(
+		// [
+    // 'pull_request.opened',
+    // 'pull_request.reopened',
+    // 'pull_request.synchronize',
+    // 'pull_request.edited'],
+		async context => {
 		console.log("the action is triggered")
     const pullRequest = context.payload.pull_request;
     const number = pullRequest.number;
